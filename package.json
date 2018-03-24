@@ -1,0 +1,26 @@
+{
+  "name": "client-2",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "chart.js": "2.7.2",
+    "cors": "^2.8.4",
+    "d3": "5.0.0",
+    "express": "^4.16.3",
+    "forever": "^0.15.3",
+    "path": "^0.12.7",
+    "react": "^16.2.0",
+    "react-c3js": "0.1.20",
+    "react-chartjs-2": "2.7.0",
+    "react-dom": "^16.2.0",
+    "react-scripts": "1.1.1"
+  },
+  "scripts": {
+    "forever": "forever start app.js",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}
