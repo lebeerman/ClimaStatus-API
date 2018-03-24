@@ -4,7 +4,7 @@ const path = require("path");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 var MongoClient = require('mongodb').MongoClient;
-var uri = "mongodb+srv://lebeerman:XABxVhOtrYDnsERG@cluster0-ojwct.mongodb.net/test";
+var uri = `mongodb+srv://lebeerman:${process.env.MONGO_PWD}@cluster0-ojwct.mongodb.net/test`;
 
 const port = process.env.PORT || 3000;
 
@@ -17,7 +17,7 @@ app.use(cors());
 let data = {};
 
 app.get("/", (req, res) => {
-  console.log(uri)
+  console.log('DATA', data);
   MongoClient.connect(uri, (err, client) => {
     console.log('CLIENT', client);
     if (err) console.log(err);
@@ -26,7 +26,7 @@ app.get("/", (req, res) => {
   	// Show that duplicate records got dropped
     collection.find({}).toArray((err, items) => {
 	if (err) console.log('FIND', err);
-        res.send(items);
+        res.send(items[items.length - 1]);
 	console.log('SENTIT',items);
 	client.close();
     });
@@ -36,6 +36,14 @@ app.get("/", (req, res) => {
 
 app.post("/", (req, res) => {
   data = req.body;
+
+  MongoClient.connect(uri, (err, client) => {
+    console.log('ADDING', data);
+    if (err) console.log('POST Error: ', err);
+    const collection = client.db('test').collection('test');
+    collection.insertOne(data);
+  });
+
   res.sendStatus(200);
 });
 
