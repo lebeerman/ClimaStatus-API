@@ -17,15 +17,35 @@ app.use(cors());
 let data = {};
 
 app.get("/", (req, res) => {
-  MongoClient.connect(uri, function(err, client) {
-    const collection = client.db('test').collection('test');
-    let example = collection.find({});
-    console.log(example);
-    res.send(example);
-    // perform actions on the collection object
-    client.close();
+  console.log(uri)
+  MongoClient.connect(uri, (err, client) => {
+    console.log(client);
+    // const collection = client.collection('test'); // db('test).
+    // let example = collection.find({});
+    // console.log(example);
+    // res.send(example);
+    // // perform actions on the collection object
+    // client.close();
   });
 });
+
+app.get('/', (req, res) => {
+  MongoClient.connect(url, (err, db) => {
+    if (err) throw err;
+
+    db
+      .collection('quilt')
+      .find({}, { _id: false, color: true })
+      .toArray((err, result) => {
+        if (err) throw err;
+        res.json(result);
+        db.close();
+      });
+  });
+});
+
+
+
 
 app.post("/", (req, res) => {
   data = req.body;
