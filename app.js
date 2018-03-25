@@ -40,11 +40,12 @@ app.get('/', (req, res) => {
 app.post('/', (req, res) => {
   data = req.body;
   MongoClient.connect(uri, (err, client) => {
-    console.log('ADDING', data);
     if (err) console.log('POST Error: ', err);
     const collection = client.db('test').collection('test');
     collection.insertOne(data);
-  });
+    console.log('ADDING', data);
+  })
+  .catch(err => console.error(err));
   res.sendStatus(200);
 });
 
