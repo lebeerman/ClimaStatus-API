@@ -13,7 +13,7 @@ const devMode = process.env.NODE_ENV !== 'production';
 
 const MongoClient = require('mongodb').MongoClient;
 const assert = require('assert');
-const uri = (port === 3000) ? `mongodb://localhost:27017/test` : `mongodb+srv://lebeerman:${process.env.MONGO_PWD}@cluster0-ojwct.mongodb.net/test`;
+const uri = `mongodb+srv://lebeerman:XABxVhOtrYDnsERG@cluster0-ojwct.mongodb.net/test`;
 const path = require('path');
 
 app.use(helmet());
@@ -29,7 +29,7 @@ app.get('/', (req, res, next) => {
   MongoClient
     .connect(uri, (err, client) => {
       if (err) return console.dir(err);
-      else console.log('Connected');
+      else console.log('Connected to DB');
       const collection = client.db('test').collection('test');
       collection.find({}).sort({ dateutc: -1 }).limit(1).toArray((err, payload) => {
           if (err) console.log('FIND', err);
