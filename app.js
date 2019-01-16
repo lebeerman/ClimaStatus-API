@@ -20,7 +20,7 @@ const httpsServer = https.createServer(credentials, app);
 
 const MongoClient = require('mongodb').MongoClient;
 const assert = require('assert');
-const uri = (port === 3000) ? `mongodb://localhost:27017/test` : `mongodb+srv://lebeerman:${process.env.MONGO_PWD}@cluster0-ojwct.mongodb.net/test`;
+const uri = `mongodb+srv://lebeerman:XABxVhOtrYDnsERG@cluster0-ojwct.mongodb.net/test`;
 const path = require('path');
 
 app.use(helmet());
@@ -86,4 +86,3 @@ httpsServer
   .listen(8443)
   .on('error', console.error.bind(console))
   .on('listening', console.log.bind(console, 'Listening on ' + port));
-  
