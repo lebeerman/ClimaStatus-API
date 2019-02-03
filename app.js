@@ -11,12 +11,16 @@ const httpServer = http.createServer(app);
 const port = parseInt(process.env.PORT || 3000);
 const devMode = process.env.NODE_ENV !== 'production';
 const https = require('https');
-const privateKey = fs.readFileSync('sslcert/server.key', 'utf8');
-const certificate = fs.readFileSync('sslcert/server.crt', 'utf8');
+const privateKey = fs.readFileSync('certs/key.pem', 'utf8');
+const certificate = fs.readFileSync('certs/cert.pem', 'utf8');
 const credentials = { key: privateKey, cert: certificate };
 const httpsServer = https.createServer(credentials, app);
+const chalk = require('chalk');
 
 // your express configuration here
+const start = Date.now();
+const protocol = process.env.PROTOCOL || 'https';
+const host = process.env.HOST || 'localhost';
 
 const MongoClient = require('mongodb').MongoClient;
 const assert = require('assert');
@@ -77,6 +81,14 @@ app.get('/payload', (req, res, next) => {
   });
 });
 
+
+console.log(
+    chalk.yellow( '%s booted in %dms - %s://%s:%s' ),
+    Date.now() - start,
+    protocol,
+    host,
+    port
+);
 
 httpServer
   .listen(port)
